@@ -1,9 +1,8 @@
 "use client";
 
 import Button from "@/components/Button";
-import { useState } from "react";
+import React, { useState } from "react";
 import PDFMerger from "pdf-merger-js/browser";
-import Navbar from "@/components/Navbar";
 import SelectPDFs from "@/components/SelectPDFs";
 import PdfFileReorderList from "@/components/PDFReorderList";
 
@@ -12,15 +11,16 @@ export default function Home() {
   const [files, setFiles] = useState<File[]>([]);
   const [mergedUrl, setMergedUrl] = useState('');
   const [isMerging, setIsMerging] = useState(false);
-  const [isDownloading, setIsDownloading] = useState(false);
 
   const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-  const handleFiles = (event: any) => {
+  const handleFiles = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFiles([]);
     setMergedUrl('');
 
-    setFiles(Array.from(event.target.files));
+    if (event.target.files) {
+      setFiles(Array.from(event.target.files));
+    }
   };
 
   const handleReorderFiles = (files: File[]) => {
@@ -72,7 +72,7 @@ export default function Home() {
       <div className="flex gap-2">
         <SelectPDFs onChange={handleFiles} />
         {files.length > 1 && <Button isLoading={isMerging} disabled={!files.length} onClick={mergePdfs}>Merge PDFs</Button>}
-        {mergedUrl && <Button isLoading={isDownloading} disabled={!mergedUrl} onClick={downloadPDF}>Download PDF</Button>}
+        {mergedUrl && <Button isLoading={false} disabled={!mergedUrl} onClick={downloadPDF}>Download PDF</Button>}
       </div>
     </div>
   );

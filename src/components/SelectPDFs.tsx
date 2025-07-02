@@ -1,5 +1,5 @@
 type SelectPDFsProps = {
-    onChange: (event: any) => void;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function SelectPDFs({ onChange }: SelectPDFsProps) {
