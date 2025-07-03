@@ -28,6 +28,10 @@ export default function Home() {
     setFiles(files);
   }
 
+  const handleDeleteFile = (file: File) => {
+    setFiles(files.filter(f => f.name !== file.name));
+  }
+
   const mergePdfs = async () => {
     setIsMerging(true);
     setMergedUrl('');
@@ -64,10 +68,10 @@ export default function Home() {
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="flex flex-col items-center">
         <h1 className="text-6xl font-bold">Merge PDFs</h1>
-        <p className="text-2xl text-gray-500 mt-2 mb-2">{'Select - Arrange - Merge - Download'}</p>
+        <p className="text-xl text-gray-500 mt-2 mb-2">{'Select - Arrange - Merge - Download'}</p>
       </div>
       <div className="flex mb-10 w-1/2 p-2">
-        <PdfFileReorderList files={files} onReorder={handleReorderFiles} />
+        <PdfFileReorderList files={files} onReorder={handleReorderFiles} onDelete={handleDeleteFile} />
       </div>
       <div className="flex gap-2">
         <SelectPDFs onChange={handleFiles} />

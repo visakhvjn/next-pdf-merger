@@ -14,7 +14,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Merge PDFs",
-  description: "The No BS way to merge PDFs",
+  description: "Select - Arrange - Merge - Download",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

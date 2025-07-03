@@ -1,12 +1,25 @@
+import { FileText, Trash2 } from "lucide-react";
 import React from "react";
 import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
 
 interface PdfFileReorderListProps {
   files: File[];
   onReorder: (newFiles: File[]) => void;
+  onDelete: (file: File) => void;
 }
 
-const PdfFileReorderList: React.FC<PdfFileReorderListProps> = ({ files, onReorder }) => {
+// Helper function to format file size
+const formatFileSize = (bytes: number): string => {
+  if (bytes === 0) return '0 Bytes';
+  
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+};
+
+const PdfFileReorderList: React.FC<PdfFileReorderListProps> = ({ files, onReorder, onDelete }) => {
   const handleOnDragEnd = (result: DropResult) => {
     if (!result.destination) return;
     const reorderedFiles = Array.from(files);
@@ -36,14 +49,21 @@ const PdfFileReorderList: React.FC<PdfFileReorderListProps> = ({ files, onReorde
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    className="w-full flex items-center gap-2 bg-white border border-gray-300 shadow-sm px-4 py-2 text-gray-800 hover:shadow-md transition-all select-none"
+                    className="w-full flex items-center justify-between gap-2 bg-white border border-gray-300 shadow-sm px-4 py-2 text-gray-800 hover:shadow-md transition-all select-none"
                     style={{
                       ...provided.draggableProps.style,
                     }}
                   >
-                    {/* File icon */}
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-black flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7V3a1 1 0 011-1h6a1 1 0 011 1v4m-8 0h8m-8 0v12a1 1 0 001 1h6a1 1 0 001-1V7m-8 0h8" /></svg>
-                    <span className="truncate" title={file.name}>{file.name}</span>
+                    <FileText className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    <span className="break-words flex-1 min-w-0" title={file.name}>{file.name}</span>
+                    <span className="text-sm text-gray-500 flex-shrink-0">{formatFileSize(file.size)}</span>
+                    <Trash2 
+                      className="w-5 h-5 cursor-pointer text-black hover:text-black/80 flex-shrink-0 mt-0.5" 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onDelete(file);
+                      }} 
+                    />
                   </div>
                 )}
               </Draggable>
