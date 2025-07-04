@@ -6,6 +6,7 @@ interface PdfFileReorderListProps {
   files: File[];
   onReorder: (newFiles: File[]) => void;
   onDelete: (file: File) => void;
+  onFileClick: (file: File) => void;
 }
 
 // Helper function to format file size
@@ -19,7 +20,7 @@ const formatFileSize = (bytes: number): string => {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 };
 
-const PdfFileReorderList: React.FC<PdfFileReorderListProps> = ({ files, onReorder, onDelete }) => {
+const PdfFileReorderList: React.FC<PdfFileReorderListProps> = ({ files, onReorder, onDelete, onFileClick }) => {
   const handleOnDragEnd = (result: DropResult) => {
     if (!result.destination) return;
     const reorderedFiles = Array.from(files);
@@ -27,6 +28,10 @@ const PdfFileReorderList: React.FC<PdfFileReorderListProps> = ({ files, onReorde
     reorderedFiles.splice(result.destination.index, 0, removed);
     onReorder(reorderedFiles);
   };
+
+  const handleFileClick = (file: File) => {
+    onFileClick(file);
+  }
 
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -53,6 +58,7 @@ const PdfFileReorderList: React.FC<PdfFileReorderListProps> = ({ files, onReorde
                     style={{
                       ...provided.draggableProps.style,
                     }}
+                    onClick={() => handleFileClick(file)}
                   >
                     <FileText className="w-5 h-5 flex-shrink-0 mt-0.5" />
                     <span className="break-words flex-1 min-w-0" title={file.name}>{file.name}</span>
