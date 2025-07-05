@@ -6,6 +6,7 @@ import PDFMerger from "pdf-merger-js/browser";
 import SelectPDFs from "@/components/SelectPDFs";
 import PdfFileReorderList from "@/components/PDFReorderList";
 import Sidebar from "@/components/Sidebar";
+import Navbar from "@/components/Navbar";
 
 
 export default function Home() {
@@ -88,11 +89,8 @@ export default function Home() {
       />
     )}
     {selectedFile && showSidebar && <Sidebar file={selectedFile} />}
+    <Navbar />
     <div className="flex flex-col items-center justify-center h-screen">
-      <div className="flex flex-col items-center">
-        <h1 className="text-6xl font-bold">Merge PDFs</h1>
-        <p className="text-xl text-gray-500 mt-2 mb-2">{'Select - Arrange - Merge - Download'}</p>
-      </div>
       <div className="flex mb-10 w-1/2 p-2">
         <PdfFileReorderList onFileClick={handleFileClick} files={files} onReorder={handleReorderFiles} onDelete={handleDeleteFile} />
       </div>
