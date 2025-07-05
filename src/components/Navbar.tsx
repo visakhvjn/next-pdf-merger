@@ -1,5 +1,4 @@
-import { Combine, Merge, MessageCircle } from "lucide-react";
-import Image from "next/image";
+import { Combine } from "lucide-react";
 import Link from "next/link";
 
 export default function Navbar() {

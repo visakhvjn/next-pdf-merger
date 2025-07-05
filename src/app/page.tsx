@@ -90,8 +90,15 @@ export default function Home() {
     )}
     {selectedFile && showSidebar && <Sidebar file={selectedFile} />}
     <Navbar />
-    <div className="flex flex-col items-center justify-center h-screen">
-      <div className="flex mb-10 w-1/2 p-2">
+    <div className="flex flex-col items-center mt-40">
+      {!files.length && <div className="flex flex-col items-center justify-center gap-2">
+        <h1 className="text-6xl font-bold">Merge</h1>
+        <p className="text-gray-500 text-center">
+          We are tired of the way how websites ask money to merge files. <br />
+          So we came up with a no BS version of doing it.
+        </p>
+      </div>}
+      <div className="flex mb-6 w-1/2 p-2">
         <PdfFileReorderList onFileClick={handleFileClick} files={files} onReorder={handleReorderFiles} onDelete={handleDeleteFile} />
       </div>
       <div className="flex gap-2">
