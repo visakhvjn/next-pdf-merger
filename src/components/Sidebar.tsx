@@ -12,7 +12,17 @@ interface SidebarProps {
 
 export default function Sidebar({ file }: SidebarProps) {
     return (
-        <div className={`p-4 fixed top-0 overflow-y-auto right-0 h-full w-96 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out z-50`}>
+        <div className={`
+            p-4 fixed 
+            overflow-y-auto
+            h-2/3 md:h-full
+            w-full md:w-96
+            bottom-0 md:bottom-auto md:top-0 md:right-0
+            rounded-t-2xl md:rounded-none
+            border-t-2 md:border-t-0 border-gray-200 md:border-none
+            bg-white shadow-2xl 
+            transform transition-transform duration-300 ease-in-out z-50`
+        }>
             <PDFViewer file={file} />
         </div>
     )

@@ -93,16 +93,16 @@ export default function Home() {
     <div className="flex flex-col items-center mt-40">
       {!files.length && <div className="flex flex-col items-center justify-center gap-2">
         <h1 className="text-6xl font-bold">Merge</h1>
-        <p className="text-gray-500 text-center">
-          We are tired of the way how websites ask money to merge files. <br />
+        <p className="text-gray-500 text-center p-2">
+          We are tired of the way how websites ask money to merge files. <br className="hidden md:block" />
           So we came up with a no BS version of doing it.
         </p>
       </div>}
-      <div className="flex mb-6 w-1/2 p-2">
+      <div className="flex mb-6 w-full md:w-1/2 p-2">
         <PdfFileReorderList onFileClick={handleFileClick} files={files} onReorder={handleReorderFiles} onDelete={handleDeleteFile} />
       </div>
       <div className="flex gap-2">
-        <SelectPDFs onChange={handleFiles} />
+        {!mergedUrl && <SelectPDFs onChange={handleFiles} />}
         {files.length > 1 && <Button isLoading={isMerging} disabled={!files.length} onClick={mergePdfs}>Merge PDFs</Button>}
         {mergedUrl && <Button isLoading={false} disabled={!mergedUrl} onClick={downloadPDF}>Download PDF</Button>}
       </div>
